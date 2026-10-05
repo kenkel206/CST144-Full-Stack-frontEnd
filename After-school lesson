@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After School lesson</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    
+    <script type="module">
+        const {createApp} = Vue
+        const myApp = createApp({
+            data(){
+                return{
+                lesson: {
+                    LessonID:1,
+                    Subject: "Math",
+                    availability:10,
+                    location:"56B",
+                    Price: 25,
+                    image:"https://images.unsplash.com/photo-1509228468518-180dd4864904?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                    alt:"a picture of the word math"
+                    },
+                 cart:[],
+                }
+            },
+            computed:{
+                cartItemCount:function(){
+                    return this.cart.length;
+                },
+                canAddToCart:function(){
+                    return this.lesson.availability > 0 ;
+                },
+                
+                    
+            },
+            methods:{
+                
+                addToCart(){
+                    this.cart.push(this.LessonID);
+                    this.lesson.availability = this.lesson.availability - 1;
+                },
+               
+            } 
+
+        })
+        myApp.mount('#thing')
+    </script>
+    <div id= "thing">
+        <div v-if:="!displayCart">
+        <h1 v-text="Subject"></h1>
+        <h3>classroom <em>{{ lesson.location }}</em></h3>
+        <p>{{ lesson.availability }} spaces available</p>
+        <p>£{{ lesson.Price }}</p>
+        <img v-bind:src="lesson.image" v-bind:alt="alt" width="300"><br><br>
+        <button v-on:click="addToCart()" v-bind:disabled="!canAddToCart">add to cart</button>
+        <p>{{cartItemCount}} items in cart</p>
+       </div>
+    </div>
+
+</body>
+</html>
