@@ -30,6 +30,7 @@
                 Phone:" ",
                 Email:" ",
                 displayCart:false,
+                orderConfirmed:false,
                 }
                 
             },
@@ -68,11 +69,23 @@
                         }   
                     }
                     return count;
-                }
+                },
+                toggleOrderConfirmed(){
+                    this.orderConfirmed = this.orderConfirmed ? false: true;
+                },
+                async fetchData() {
+                const url = 'http://localhost:3000/';
+                let response = await fetch(url);
+                this.lessons = await response.json();
+                },
                
+            },
+            created(){
+                this.fetchData();
             } 
-
-        })
+               
+            })
+            
         myApp.mount('#app')
     </script>
     <div id= "app">
