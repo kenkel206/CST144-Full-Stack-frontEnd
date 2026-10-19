@@ -31,6 +31,9 @@
                 Email:" ",
                 displayCart:false,
                 orderConfirmed:false,
+                PricingOrder:false,
+                increasingOrder:true,
+                SortType: "Price",
                 }
                 
             },
@@ -73,12 +76,62 @@
                 toggleOrderConfirmed(){
                     this.orderConfirmed = this.orderConfirmed ? false: true;
                 },
+                toggleSortOrder(){
+                    this.increasingOrder = !this.increasingOrder;
+                },
                 async fetchData() {
                 const url = 'http://localhost:3000/';
                 let response = await fetch(url);
                 this.lessons = await response.json();
                 },
-               
+                 SetSortType(aSortType){
+                    this.SortType = aSortType;
+                },
+               sortedLessons(){  
+                let LessonsArray =[...this.lessons];
+
+                if (this.SortType === "Price"){
+                    if(this.lessons.length > 0) {
+                        function compare(a, b){
+                            if(a.Price < b.Price)
+                                return -1;
+                            if(a.Price > b.Price)
+                                return 1;
+                            return 0;
+                        }
+                        return LessonsArray.sort(compare);
+                    }
+                }
+                if(this.SortType ==="Subject"){
+                        if(this.lessons.length > 0) {
+                        function compare(a, b){
+                            if(a.Subject.toLowerCase() < b.Subject.toLowerCase())
+                                return -1;
+                            if(a.Subject.toLowerCase() > b.Subject.toLowerCase())
+                                return 1;
+                            return 0;
+                        }
+                         return this.increasingOrder ?
+                         LessonsArray.sort(compare): LessonsArray.sort(compare).reverse();
+                    }
+                }     
+                if(this.SortType === "availability"){
+                        if(this.lessons.length > 0) {
+                        function compare(a, b){
+                            if(a.availability < b.availability)
+                                return -1;
+                            if(a.availability > b.availability)
+                                return 1;
+                            return 0;
+                        }
+                         return this.increasingOrder ?
+                         LessonsArray.sort(compare):LessonsArray.sort(compare).reverse();
+                    }  
+                     
+                
+                }
+                   
+               }
             },
             created(){
                 this.fetchData();
@@ -90,8 +143,10 @@
     </script>
     <div id= "app">
     <div v-if="!displayCart">
-        <button @click="toggleCheckout">Shopping Cart</button>
-        <div v-for="lesson in lessons">  
+        <button @click="toggleCheckout">Shopping Cart</button><br>
+        <button @click="SetSortType('Price')">price</button><button @click="SetSortType('Subject')">Subject</button><button @click="SetSortType('availability')">availability</button><br>
+        <button @click="toggleSortOrder">asc/desc</button>
+        <div v-for="lesson in sortedLessons()">  
             <h1 v-text="lesson.Subject"></h1>
             <h3>classroom <em>{{ lesson.location }}</em></h3>
             <p>{{ lesson.availability }} spaces available</p>
