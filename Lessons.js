@@ -10,12 +10,12 @@ let LessonsArray = [
 },
 {
     LessonID: 2,
-    Subject: "science",
+    Subject: "Science",
     availability:20,
     location:201,
     Price:30,
     image: "https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
-    alt: "science"
+    alt: "Science"
 },
 {
     LessonID: 3,

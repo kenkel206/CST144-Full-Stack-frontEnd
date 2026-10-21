@@ -26,9 +26,9 @@
                     
                     lessons: LessonsArray,
                  cart:[],
-                Name: " ",
-                Phone:" ",
-                Email:" ",
+                Name: "",
+                Phone:"",
+                Email:"",
                 displayCart:false,
                 orderConfirmed:false,
                 PricingOrder:false,
@@ -62,6 +62,12 @@
                 //checks if there is available spaces
                 canAddToCart(lesson){
                     return lesson.availability > 0;
+                },
+                isCartEmpty(){
+                     return this.cart.length === 0;   
+                },
+                isDetailsMissing(){
+                    return this.Name !=="" && this.Phone !="";
                 },
                 //how many subjects are to be bought
                 cartCount(id) {
@@ -99,7 +105,9 @@
                                 return 1;
                             return 0;
                         }
-                        return LessonsArray.sort(compare);
+                        return this.increasingOrder ? 
+                        LessonsArray.sort(compare): LessonsArray.sort(compare).reverse(); 
+                        
                     }
                 }
                 if(this.SortType ==="Subject"){
@@ -143,7 +151,7 @@
     </script>
     <div id= "app">
     <div v-if="!displayCart">
-        <button @click="toggleCheckout">Shopping Cart</button><br>
+        <button @click="toggleCheckout" v-bind:disabled="isCartEmpty()">Shopping Cart</button><br>
         <button @click="SetSortType('Price')">price</button><button @click="SetSortType('Subject')">Subject</button><button @click="SetSortType('availability')">availability</button><br>
         <button @click="toggleSortOrder">asc/desc</button>
         <div v-for="lesson in sortedLessons()">  
@@ -158,17 +166,17 @@
     </div>
      <div v-else>
         <h1>Shopping Cart</h1>
-        <button @click="toggleCheckout">Store</button><br>
+        <button @click="toggleCheckout">Shopping Cart</button><br>
          <div v-for="lesson in cart">  
             <h1 v-text="lesson.Subject"></h1>
-            <h3>classroom <em>{{ lesson.location }}</em></h3>
+            <h3>classroom <em>{{ lesson.location}}</em></h3>
             <button v-on:click="removeFromCart(lesson)">remove from cart</button>
         </div> 
         name <input v-model="Name"><br>
         phone <input v-model="Phone"><br>
         email <input v-model="Email"><br>
-        <button>Checkout</button>
-        <!-- <p>order confirmed</p> -->
+        <button :disabled="!isDetailsMissing()" @click="toggleOrderConfirmed">Checkout</button>
+        <p v-if="orderConfirmed">order confirmed</p> 
      </div>
     </div>
 
