@@ -163,7 +163,7 @@
             <h3>classroom <em>{{ lesson.location }}</em></h3>
             <p>{{ lesson.availability }} spaces available</p>
             <p>£{{ lesson.Price }}</p>
-            <img v-bind:src="lesson.image" v-bind:alt="lesson.alt" width="300"><br><br>
+            <img v-bind:src="imageAddress(lesson)" v-bind:alt="lesson.alt" width="300"><br><br>
            <button v-on:click="addToCart(lesson)" v-bind:disabled="!canAddToCart(lesson) ">add to cart</button>
             <p>{{ cart.length }} items in cart</p>
         </div> 
