@@ -55,6 +55,8 @@
                     this.cart.push(lesson.LessonID);
                     lesson.availability--;
                 },
+                //make a function that get the entire lesson from the id 
+                
                 removeFromCart(lesson){
                     this.cart.pop(lesson.lessonID);
                     lesson.availability++;
@@ -102,6 +104,22 @@
                 },
                  SetSortType(aSortType){
                     this.SortType = aSortType;
+                },
+                async updateLesson(lesson){ 
+                    let updateBody = { 
+                        availability : lesson.availability
+
+                    }; 
+ 
+                    const url = "http://localhost:3000/lessons/" + lesson._id; 
+                    const options = { 
+                        method: 'PUT', 
+                        headers: { 
+                            'Content-Type': 'application/json' 
+                        }, 
+                        body: JSON.stringify(updateBody) 
+                    } 
+                    let response = await (fetch (url, options)); 
                 },
                sortedLessons(){  
                 let LessonsArray =[...this.lessons];
