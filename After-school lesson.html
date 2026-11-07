@@ -45,22 +45,26 @@
                 this.fetchData();
             },
             methods:{
-                //puts id in the cart
-                addToCart(){
-                    this.cart.push(this.LessonID);
-                
-                },
-                //puts id in the cart array and geets rid of avialability
-                addToCart(lesson){
-                    this.cart.push(lesson.LessonID);
-                    lesson.availability--;
-                },
-                //make a function that get the entire lesson from the id 
-                
-                removeFromCart(lesson){
-                    this.cart.pop(lesson.lessonID);
-                    lesson.availability++;
-                },
+               Getlesson(id){
+                return this.lessons.find(lesson => lesson.LessonID === id);
+               },
+               addToCart(lesson){
+                   this.cart.push(lesson.LessonID);
+                   lesson.availability--;
+               },
+
+               removeFromCart(id){
+                   const cartIndex = this.cart.indexOf(id);
+                   if (cartIndex === -1) {
+                       return;
+                   }
+
+                   this.cart.splice(cartIndex, 1);
+                   const lesson = this.Getlesson(id);
+                   if (lesson) {
+                       lesson.availability++;
+                   }
+               },
                //decides if checkout page should be on or not
                 toggleCheckout(){
                     this.displayCart = this.displayCart ? false: true; 
@@ -97,7 +101,7 @@
                         name: this.Name,
                         phone:this.Phone,
                         Email: this.Email,
-                        lessons:this.cart
+                        cart:this.cart
                     })
                     }
                     let response = await (fetch (url, options));
@@ -194,10 +198,10 @@
      <div v-else>
         <h1>Shopping Cart</h1>
         <button @click="toggleCheckout">Shopping Cart</button><br>
-         <div v-for="lesson in cart">  
-            <h1 v-text="lesson.Subject"></h1>
-            <h3>classroom <em>{{ lesson.location}}</em></h3>
-            <button v-on:click="removeFromCart(lesson)">remove from cart</button>
+         <div v-for="id in cart">
+            <h1 v-text="Getlesson(id).Subject"></h1>
+            <h3>classroom <em>{{ Getlesson(id).location}}</em></h3>
+            <button v-on:click="removeFromCart(id)">remove from cart</button>
         </div> 
         name <input v-model="Name"><br>
         phone <input v-model="Phone"><br>
