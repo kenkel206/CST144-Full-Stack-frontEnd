@@ -8,7 +8,7 @@
     <script src="Lessons.js"></script>
 </head>
 <body>
-    
+
     <script type="module">
         const LessonsUrl = "https://m01006961-server.onrender.com"
         const {createApp} = Vue
@@ -145,7 +145,7 @@
                 if(this.SortType ==="Subject"){
                         if(this.lessons.length > 0) {
                         function compare(a, b){
-                            if(a.Subject.toLowerCase() < b.Subject.toLowerCase())
+                            if(a.Subject < b.Subject)
                                 return -1;
                             if(a.Subject.toLowerCase() > b.Subject.toLowerCase())
                                 return 1;
@@ -173,7 +173,28 @@
                    
                }, imageAddress(lesson){
                 return LessonsUrl +"/"+ lesson.Image;
-               }
+               },
+               async searchContents() {
+                //get users search query
+                const searchq = document.querySelector("#searchContents").value;
+                //create the query
+                let url = LessonsUrl + '/lessons?q=' + searchq;
+
+                //request the query to server
+                const response = await fetch(url)
+                const results = await response.json();
+                console.log(results);
+
+                //Add search results to page
+                const searchResults = document.querySelector('#SearchResults');
+
+                 //work through results
+                 let resultStr = "";
+                for(let result of results){
+                resultStr += `<div>${result.Subject}: ${result.availability} spaces</div>`;
+                }
+                searchResults.innerHTML = resultStr;
+            }
             } 
                
             })
@@ -184,7 +205,9 @@
     <div v-if="!displayCart">
         <button @click="toggleCheckout" v-bind:disabled="isCartEmpty()">Shopping Cart</button><br>
         <button @click="SetSortType('Price')">price</button><button @click="SetSortType('Subject')">Subject</button><button @click="SetSortType('availability')">availability</button><br>
-        <button @click="toggleSortOrder">asc/desc</button>
+        <button @click="toggleSortOrder">asc/desc</button><br>
+        <input type="text" id="searchContents"><button v-on:click="searchContents()">search</button>
+        <div id="SearchResults"></div>
         <div v-for="lesson in sortedLessons()">  
             <h1 v-text="lesson.Subject"></h1>
             <h3>classroom <em>{{ lesson.location }}</em></h3>
