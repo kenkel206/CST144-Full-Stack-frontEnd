@@ -158,12 +158,12 @@
                          LessonsArray.sort(compare): LessonsArray.sort(compare).reverse();
                     }
                 }     
-                if(this.SortType === "Location"){
+                if(this.SortType === "location"){
                         if(this.lessons.length > 0) {
                         function compare(a, b){
-                            if(a.availability < b.availability)
+                            if(a.location < b.location)
                                 return -1;
-                            if(a.availability > b.availability)
+                            if(a.location > b.location)
                                 return 1;
                             return 0;
                         }
@@ -171,8 +171,8 @@
                          LessonsArray.sort(compare):LessonsArray.sort(compare).reverse();
                     }  
                      
-                
-                }if(this.SortType === "availability"){
+                }
+                if(this.SortType === "availability"){
                         if(this.lessons.length > 0) {
                         function compare(a, b){
                             if(a.availability < b.availability)
@@ -221,7 +221,7 @@
     <div id= "app">
     <div v-if="!displayCart">
         <button @click="toggleCheckout" v-bind:disabled="isCartEmpty()">Shopping Cart</button><br>
-        <button @click="SetSortType('Price')">price</button><button @click="SetSortType('Subject')">Subject</button><button @click="SetSortType('availability')">availability</button><br>
+        <button @click="SetSortType('Price')">price</button><button @click="SetSortType('Subject')">Subject</button><button @click="SetSortType('location')">availability</button><button @click="SetSortType('availability')">availability</button><br>
         <button @click="toggleSortOrder">asc/desc</button><br>
         <input type="text" id="searchContents"><button v-on:click="searchContents()">search</button>
         <div id="SearchResults"></div>
