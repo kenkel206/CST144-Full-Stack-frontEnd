@@ -111,8 +111,8 @@
                 },
                 async updateLesson(lesson){ 
                     let updateBody = { 
-                        availability : lesson.availability
-
+                        availability : lesson.availability,
+                        location : lesson.location
                     }; 
  
                     const url = "http://localhost:3000/lessons/" + lesson._id; 
