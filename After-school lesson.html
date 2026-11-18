@@ -158,7 +158,21 @@
                          LessonsArray.sort(compare): LessonsArray.sort(compare).reverse();
                     }
                 }     
-                if(this.SortType === "availability"){
+                if(this.SortType === "Location"){
+                        if(this.lessons.length > 0) {
+                        function compare(a, b){
+                            if(a.availability < b.availability)
+                                return -1;
+                            if(a.availability > b.availability)
+                                return 1;
+                            return 0;
+                        }
+                         return this.increasingOrder ?
+                         LessonsArray.sort(compare):LessonsArray.sort(compare).reverse();
+                    }  
+                     
+                
+                }if(this.SortType === "availability"){
                         if(this.lessons.length > 0) {
                         function compare(a, b){
                             if(a.availability < b.availability)
