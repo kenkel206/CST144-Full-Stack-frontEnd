@@ -112,7 +112,10 @@
                 async updateLesson(lesson){ 
                     let updateBody = { 
                         availability : lesson.availability,
-                        location : lesson.location
+                        location : lesson.location,
+                        LessonID:lesson.LessonID,
+                        Subject:lesson.Subject,
+                        Price:lesson.Price
                     }; 
  
                     const url = "http://localhost:3000/lessons/" + lesson._id; 
