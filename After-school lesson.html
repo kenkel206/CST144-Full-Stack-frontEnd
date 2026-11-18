@@ -77,7 +77,8 @@
                      return this.cart.length === 0;   
                 },
                 isDetailsMissing(){
-                    return this.Name !=="" && this.Phone !="";
+                    return this.Name !=="" && this.Phone !=""; 
+                  //  this.Name.match(/\w/g) && this.Phone.match(/\d/g)
                 },
                 toggleOrderConfirmed(){
                     this.orderConfirmed = this.orderConfirmed ? false: true;
