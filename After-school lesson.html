@@ -221,7 +221,7 @@
     <div id= "app">
     <div v-if="!displayCart">
         <button @click="toggleCheckout" v-bind:disabled="isCartEmpty()">Shopping Cart</button><br>
-        <button @click="SetSortType('Price')">price</button><button @click="SetSortType('Subject')">Subject</button><button @click="SetSortType('location')">availability</button><button @click="SetSortType('availability')">availability</button><br>
+        <button @click="SetSortType('Price')">price</button><button @click="SetSortType('Subject')">Subject</button><button @click="SetSortType('location')">location</button><button @click="SetSortType('availability')">availability</button><br>
         <button @click="toggleSortOrder">asc/desc</button><br>
         <input type="text" id="searchContents"><button v-on:click="searchContents()">search</button>
         <div id="SearchResults"></div>
