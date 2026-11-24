@@ -77,8 +77,16 @@
                      return this.cart.length === 0;   
                 },
                 isDetailsMissing(){
-                    return this.Name !=="" && this.Phone !="" && this.Name.match(/\w/g) && this.Phone.match(/\d/g);
-                },
+                    this.Name != ""
+                    this.Phone !=""
+                    const pattern1 = /^[a-z ]+$/i;
+                    const pattern2 = /^\d{11}$/;
+                     if (pattern2.test(this.Phone) && pattern1.test(this.Name)) {
+                     return true
+                    } else {
+                      return false
+                    }
+                  },
                 toggleOrderConfirmed(){
                     this.orderConfirmed = this.orderConfirmed ? false: true;
                 },
@@ -213,8 +221,7 @@
                 searchResults.innerHTML = resultStr;
             }
             } 
-               
-            })
+        })
             
         myApp.mount('#app')
     </script>
